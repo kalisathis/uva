@@ -1,27 +1,33 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
 class Main 
 {
     public static void main(String [] args) throws IOException
     {
         BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
-        while(true)
+        String s;
+        while((s=in.readLine())!=null)
         {
-            StringTokenizer st=new StringTokenizer(in.readLine());
-            int m=Integer.parseInt(st.nextToken());
-            int n=Integer.parseInt(st.nextToken());
-            if(n==0 && m==0)
-                break;
-            Set<Integer>s=new TreeSet<>();
-            for(int i=0;i<m;i++)
-                s.add(Integer.parseInt(in.readLine()));
-            int c=0;
-            for(int i=0;i<n;i++)
+            LinkedList<Character> a=new LinkedList<>();
+            int n=0;
+            
+           
+            for(char c: s.toCharArray())
             {
-                if(s.contains(Integer.parseInt(in.readLine())))
-                c++;
+                if(c=='[')
+                    n=0;
+                else if(c==']')
+                    n=a.size();
+                else    
+                    a.add(n++,c);
+                    
             }
-            System.out.println(c);
+            StringBuilder sb=new StringBuilder();
+            for( char c: a)
+                sb.append(c);
+            System.out.println(sb.toString());
             
         }
         
