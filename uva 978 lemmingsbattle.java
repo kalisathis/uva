@@ -1,40 +1,19 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-/**
- * Lemmings Battle!
- *
- * @author Izhari Ishak Aksa
- */
-public class Main {
-
-    static BufferedReader br;
-
-    static int nextInt() throws Exception {
-        int ret = 0, x;
-        while (true) {
-            x = br.read();
-            if (x == 10 || x == 32 || x == -1) {
-                return ret;
-            }
-            ret *= 10;
-            ret += x - 48;
-        }
-    }
-
+class main{
     public static void main(String[] args) throws Exception {
-        br = new BufferedReader(new InputStreamReader(System.in));
-        PrintWriter pw = new PrintWriter(System.out);
-        int TC = nextInt();
+       Scanner in=new Scanner(System.in);
+        int TC = in.nextInt();
         while (TC-- > 0) {
-            int B = nextInt();
-            int SG = nextInt();
-            int SB = nextInt();
+            int B = in.nextInt();
+            int SG = in.nextInt();
+            int SB = in.nextInt();
 
             PriorityQueue<Integer> QG = new PriorityQueue<Integer>(SG, new Comparator<Integer>() {
                 public int compare(Integer o1, Integer o2) {
@@ -45,7 +24,7 @@ public class Main {
                 }
             });
             for (int i = 0; i < SG; i++) {
-                QG.add(nextInt());
+                QG.add(in.nextInt());
             }
 
             PriorityQueue<Integer> QB = new PriorityQueue<Integer>(SB, new Comparator<Integer>() {
@@ -57,29 +36,31 @@ public class Main {
                 }
             });
             for (int i = 0; i < SB; i++) {
-                QB.add(nextInt());
+                QB.add(in.nextInt());
             }
 
             while (true) {
                 if (QG.isEmpty() && QB.isEmpty()) {
-                    pw.println("green and blue died");
+                    System.out.println("green and blue died");
                     break;
                 } else if (QG.isEmpty()) {
-                    pw.println("blue wins");
+                    System.out.println("blue wins");
                     while (!QB.isEmpty()) {
-                        pw.println(QB.poll());
+                        System.out.println(QB.poll());
                     }
                     break;
                 } else if (QB.isEmpty()) {
-                    pw.println("green wins");
+                    System.out.println("green wins");
                     while (!QG.isEmpty()) {
-                        pw.println(QG.poll());
+                        System.out.println(QG.poll());
                     }
                     break;
                 } else {
+                    
                     int count = 0;
                     List<Integer> LG = new ArrayList<Integer>();
                     List<Integer> LB = new ArrayList<Integer>();
+                    
                     while (!QG.isEmpty() && !QB.isEmpty() && count < B) {
                         int a = QG.poll();
                         int b = QB.poll();
@@ -88,15 +69,15 @@ public class Main {
                         } else if (b > a) {
                             LB.add(b - a);
                         }
+
                         count++;
                     }
                     QG.addAll(LG);
                     QB.addAll(LB);
-                }
+                    }
             }
-            pw.flush();
             if (TC > 0) {
-                pw.println();
+                System.out.println();
             }
         }
     }
